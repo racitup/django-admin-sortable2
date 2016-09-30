@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import warnings
 from types import MethodType
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -21,12 +22,12 @@ __all__ = ['SortableAdminMixin', 'SortableInlineAdminMixin']
 
 def _get_default_ordering(model):
     try:
-        if model._meta.ordering[0].startswith('-'):
+        if model._meta.ordering[-1].startswith('-'):
             default_order_directions = ((1, 0), (0, 1))
-            default_order_field = model._meta.ordering[0].lstrip('-')
+            default_order_field = model._meta.ordering[-1].lstrip('-')
         else:
             default_order_directions = ((0, 1), (1, 0))
-            default_order_field = model._meta.ordering[0]
+            default_order_field = model._meta.ordering[-1]
     except (AttributeError, IndexError):
         msg = "Model {0}.{1} requires a list or tuple 'ordering' in its Meta class"
         raise ImproperlyConfigured(msg.format(model.__module__, model.__name__))
