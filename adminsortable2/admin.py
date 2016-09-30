@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-import warnings
 from types import MethodType
 from django import forms
 from django.utils.translation import ugettext_lazy as _
